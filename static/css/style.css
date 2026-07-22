@@ -1,0 +1,844 @@
+/* ==========================================================================
+   Airbnb Design System — Custom CSS Implementation
+   ========================================================================== */
+
+/* 1. Design Tokens */
+:root {
+  /* Brand & Accent Colors */
+  --color-primary: #ff385c;           /* Rausch */
+  --color-primary-active: #e00b41;    /* Rausch Active */
+  --color-primary-disabled: #ffd1da;  /* Rausch Disabled */
+  --color-on-primary: #ffffff;
+
+  /* Sub-brand Accents (for badges/accents) */
+  --color-luxe: #460479;
+  --color-plus: #92174d;
+
+  /* Surfaces */
+  --color-canvas: #ffffff;
+  --color-surface-soft: #f7f7f7;
+  --color-surface-strong: #f2f2f2;
+
+  /* Hairlines & Borders */
+  --color-hairline: #dddddd;
+  --color-hairline-soft: #ebebeb;
+  --color-border-strong: #c1c1c1;
+
+  /* Text Colors */
+  --color-ink: #222222;
+  --color-body: #3f3f3f;
+  --color-muted: #6a6a6a;
+  --color-muted-soft: #929292;
+  --color-star-rating: #222222;
+
+  /* Semantic */
+  --color-error: #c13515;
+  --color-error-hover: #b32505;
+  --color-scrim: rgba(0, 0, 0, 0.5);
+
+  /* Typography Fallback Stack */
+  --font-family-base: "Inter", "Circular", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  /* Shape Language (Border Radius) */
+  --rounded-sm: 8px;
+  --rounded-md: 14px;
+  --rounded-lg: 24px;
+  --rounded-xl: 32px;
+  --rounded-full: 9999px;
+
+  /* Single Shadow Tier */
+  --elevation-shadow: rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0;
+
+  /* Spacing System */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-section: 64px;
+}
+
+/* 2. Global Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* 3. Typography Utility Classes */
+.text-display-xl {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.43;
+  letter-spacing: 0;
+}
+
+.text-display-lg {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.44px;
+}
+
+.text-display-md {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.43;
+}
+
+.text-display-sm {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.20;
+  letter-spacing: -0.18px;
+}
+
+.text-title-md {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.text-title-sm {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.text-body-md {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-body);
+}
+
+.text-body-sm {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  color: var(--color-muted);
+}
+
+.text-caption {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+}
+
+.text-caption-sm {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.23;
+  color: var(--color-muted);
+}
+
+.badge-text {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.18;
+}
+
+.tag-uppercase {
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.32px;
+  text-transform: uppercase;
+}
+
+/* 4. Top Navigation Bar */
+.top-nav {
+  height: 80px;
+  background-color: var(--color-canvas);
+  border-bottom: 1px solid var(--color-hairline);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-xl);
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+}
+
+.brand-logo svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--color-primary);
+}
+
+.product-tabs-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  height: 100%;
+}
+
+.product-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+  padding: 0 var(--spacing-xs);
+  cursor: pointer;
+  position: relative;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  user-select: none;
+}
+
+.product-tab:hover {
+  color: var(--color-ink);
+}
+
+.product-tab.active {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.product-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-ink);
+}
+
+.tab-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-badge {
+  position: absolute;
+  top: 14px;
+  right: -8px;
+  background-color: var(--color-surface-soft);
+  border: 1px solid var(--color-hairline);
+  color: var(--color-ink);
+  padding: 2px 6px;
+  border-radius: var(--rounded-full);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.model-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-surface-soft);
+  border: 1px solid var(--color-hairline);
+  padding: 6px 12px;
+  border-radius: var(--rounded-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #008a05;
+}
+
+.icon-btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--rounded-full);
+  border: 1px solid var(--color-hairline);
+  background-color: var(--color-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.icon-btn-circle:hover {
+  box-shadow: var(--elevation-shadow);
+  background-color: var(--color-surface-soft);
+}
+
+/* 5. Main Layout & Page Containers */
+.main-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-section);
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.hero-title {
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-ink);
+}
+
+.hero-subtitle {
+  color: var(--color-muted);
+  font-size: 16px;
+}
+
+/* 6. Airbnb Signature Search-Bar Pill (Input Bar) */
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-section);
+}
+
+.search-bar-pill {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--rounded-full);
+  box-shadow: var(--elevation-shadow);
+  height: 66px;
+  padding: 8px 8px 8px 16px;
+  width: 100%;
+  max-width: 900px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.search-bar-pill:focus-within {
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 2px var(--color-ink);
+}
+
+.search-field-segment {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4px var(--spacing-md);
+  position: relative;
+}
+
+.search-field-segment:not(:last-of-type)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background-color: var(--color-hairline);
+}
+
+.segment-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  margin-bottom: 2px;
+}
+
+.segment-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-ink);
+  width: 100%;
+}
+
+.segment-input::placeholder {
+  color: var(--color-muted);
+}
+
+.segment-select {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-ink);
+  width: 100%;
+  cursor: pointer;
+}
+
+.search-orb {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: var(--rounded-full);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  margin-left: 8px;
+}
+
+.search-orb:hover {
+  background-color: var(--color-primary-active);
+}
+
+.search-orb:active {
+  transform: scale(0.96);
+}
+
+.search-orb svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* 7. Secondary Input Controls (Expandable Options) */
+.extra-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-base);
+  max-width: 900px;
+  margin: 0 auto var(--spacing-xl);
+}
+
+.form-group-airbnb {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-label-airbnb {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.text-input-airbnb {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--rounded-sm);
+  height: 48px;
+  padding: 0 var(--spacing-base);
+  font-size: 14px;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.text-input-airbnb:focus {
+  border: 2px solid var(--color-ink);
+  padding: 0 15px; /* adjust for 2px border */
+}
+
+.textarea-airbnb {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--rounded-sm);
+  padding: var(--spacing-md) var(--spacing-base);
+  font-size: 14px;
+  color: var(--color-ink);
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.15s ease;
+}
+
+.textarea-airbnb:focus {
+  border: 2px solid var(--color-ink);
+}
+
+/* 8. Results Grid & Property-Card Layout */
+.results-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-hairline-soft);
+}
+
+.output-card {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--rounded-md);
+  box-shadow: var(--elevation-shadow);
+  padding: var(--spacing-lg);
+  position: relative;
+  margin-bottom: var(--spacing-xl);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.output-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-base);
+}
+
+.guest-favorite-badge {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  box-shadow: var(--elevation-shadow);
+  padding: 4px 12px;
+  border-radius: var(--rounded-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.badge-star {
+  color: var(--color-star-rating);
+  font-weight: 700;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary-airbnb {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+  border-radius: var(--rounded-sm);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.btn-secondary-airbnb:hover {
+  background-color: var(--color-surface-soft);
+}
+
+.heart-button {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--rounded-full);
+  border: 1px solid var(--color-hairline);
+  background: var(--color-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-ink);
+  transition: all 0.15s ease;
+}
+
+.heart-button:hover {
+  transform: scale(1.05);
+}
+
+.heart-button.saved {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.output-content {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-body);
+  word-wrap: break-word;
+}
+
+.output-content h1, .output-content h2, .output-content h3 {
+  color: var(--color-ink);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.output-content ul, .output-content ol {
+  margin-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.output-content p {
+  margin-bottom: 0.75rem;
+}
+
+/* Copyable Code Blocks & Quotes */
+.copyable-code-block {
+  position: relative;
+  background-color: var(--color-surface-soft);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--rounded-sm);
+  padding: 14px 52px 14px 14px;
+  margin: 12px 0;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.copyable-code-block pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+
+.copyable-code-block code {
+  font-family: inherit;
+}
+
+.copy-snippet-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--rounded-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--elevation-shadow);
+  transition: all 0.15s ease;
+}
+
+.copy-snippet-btn:hover {
+  background-color: var(--color-surface-strong);
+  border-color: var(--color-ink);
+}
+
+/* Markdown Horizontal Divider Rule (---) */
+.airbnb-hr {
+  border: none;
+  border-top: 1px solid var(--color-hairline);
+  margin: 12px 0;
+}
+
+/* Skeleton Loading State */
+.skeleton-line {
+  height: 16px;
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 50%, #f2f2f2 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 9. Modal Dialog (Settings Picker) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-scrim);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background-color: var(--color-canvas);
+  border-radius: var(--rounded-md);
+  box-shadow: var(--elevation-shadow);
+  width: 90%;
+  max-width: 520px;
+  padding: var(--spacing-lg);
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.2s ease;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-hairline);
+  padding-bottom: var(--spacing-base);
+  margin-bottom: var(--spacing-lg);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--color-ink);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  background-color: var(--color-surface-soft);
+}
+
+.btn-primary-airbnb {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: var(--rounded-sm);
+  height: 48px;
+  padding: 0 var(--spacing-lg);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary-airbnb:hover {
+  background-color: var(--color-primary-active);
+}
+
+/* 10. Airbnb Light Footer */
+.footer-light {
+  background-color: var(--color-canvas);
+  border-top: 1px solid var(--color-hairline);
+  padding: var(--spacing-xxl) var(--spacing-lg) var(--spacing-xl);
+  margin-top: var(--spacing-section);
+}
+
+.footer-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-lg);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.footer-column h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--spacing-base);
+}
+
+.footer-column ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.footer-column a {
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.legal-band {
+  max-width: 1280px;
+  margin: var(--spacing-lg) auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-base);
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* 11. Responsive Adjustments */
+@media (max-width: 744px) {
+  .top-nav {
+    padding: 0 var(--spacing-base);
+  }
+  .product-tabs-container {
+    overflow-x: auto;
+    gap: var(--spacing-md);
+  }
+  .search-bar-pill {
+    flex-direction: column;
+    height: auto;
+    border-radius: var(--rounded-md);
+    padding: var(--spacing-md);
+    gap: var(--spacing-sm);
+  }
+  .search-field-segment:not(:last-of-type)::after {
+    display: none;
+  }
+  .search-orb {
+    width: 100%;
+    border-radius: var(--rounded-sm);
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}

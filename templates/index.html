@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airbnb Marketing Studio — AI Copy Generator</title>
+    <!-- Inter Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Marked.js Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- 1. Airbnb Top Navigation -->
+    <header class="top-nav">
+        <div class="brand-logo" onclick="window.location.reload()">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.011.315c0 4.308-3.322 7.806-7.5 7.806-3.131 0-5.741-1.921-6.852-4.664L16 27.042l-.148.332C14.741 30.116 12.131 32 9 32 4.822 32 1.5 28.502 1.5 24.194c0-.996.22-1.918.895-3.522l.17-.393c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C11.488 2.052 12.943 1 15 1h1zm0 2c-1.22 0-2.25.688-3.313 2.585l-.396.762C10.428 10.024 6.36 18.522 5.4 20.771l-.105.247c-.571 1.36-.795 2.072-.835 2.766L4.45 24.194c0 2.99 2.19 5.806 5.55 5.806 2.378 0 4.417-1.503 5.28-3.794l.17-.45.32-.843c.12-.317.51-.317.63 0l.32.843.17.45c.863 2.291 2.902 3.794 5.28 3.794 3.36 0 5.55-2.816 5.55-5.806 0-.756-.232-1.528-.888-3.088l-.104-.247c-.96-2.249-5.028-10.747-6.891-14.424l-.396-.762C17.25 3.688 16.22 3 15 3h1z"/>
+            </svg>
+            <span>Marketing</span>
+        </div>
+
+        <nav class="product-tabs-container">
+            <div class="product-tab active" data-tool="ad_copy" onclick="switchTool('ad_copy', this)">
+                <div class="tab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <span>Ad Copy</span>
+            </div>
+
+            <div class="product-tab" data-tool="social_caption" onclick="switchTool('social_caption', this)">
+                <div class="tab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <span>Social Captions</span>
+            </div>
+
+            <div class="product-tab" data-tool="email_campaign" onclick="switchTool('email_campaign', this)">
+                <div class="tab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <span>Email Campaigns</span>
+            </div>
+
+            <div class="product-tab" data-tool="product_description" onclick="switchTool('product_description', this)">
+                <div class="tab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
+                <span>Product Copy</span>
+            </div>
+
+            <div class="product-tab" data-tool="slogan" onclick="switchTool('slogan', this)">
+                <div class="tab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <span>Slogans</span>
+            </div>
+
+            <div class="product-tab" data-tool="marketing_ideas" onclick="switchTool('marketing_ideas', this)">
+                <div class="tab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                </div>
+                <span class="new-badge tag-uppercase">NEW</span>
+                <span>Growth Ideas</span>
+            </div>
+        </nav>
+
+        <div class="nav-actions">
+            <div class="model-status-pill" title="Active Model from .env">
+                <span class="status-dot"></span>
+                <span id="activeModelLabel">{{ active_model }}</span>
+            </div>
+
+            <button class="icon-btn-circle" onclick="openSettingsModal()" title="Configure API Key & Model">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. Main Page Content -->
+    <main class="main-wrapper">
+        <section class="hero-section">
+            <h1 class="text-display-xl hero-title" id="toolHeading">Generate High-Converting Ad Copy</h1>
+            <p class="hero-subtitle" id="toolSubtitle">Craft persuasive headline variations and primary body text tuned for your target audience.</p>
+        </section>
+
+        <!-- Signature Airbnb Search-Bar Pill Console -->
+        <div class="search-bar-container">
+            <div class="search-bar-pill">
+                <!-- Segment 1: Brand / Product Name -->
+                <div class="search-field-segment">
+                    <span class="segment-label">PRODUCT / BRAND</span>
+                    <input type="text" id="inputBrandName" class="segment-input" placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar">
+                </div>
+
+                <!-- Segment 2: Description / Core Details -->
+                <div class="search-field-segment">
+                    <span class="segment-label">CORE DETAILS</span>
+                    <input type="text" id="inputDescription" class="segment-input" placeholder="e.g. Zero calories, iconic taste, ice-cold refresh" value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment">
+                </div>
+
+                <!-- Segment 3: Audience & Voice Tone -->
+                <div class="search-field-segment">
+                    <span class="segment-label">TONE & AUDIENCE</span>
+                    <select id="selectTone" class="segment-select">
+                        <option value="Energetic & Bold">Energetic & Bold</option>
+                        <option value="Professional & Persuasive">Professional & Persuasive</option>
+                        <option value="Casual & Friendly">Casual & Friendly</option>
+                        <option value="Witty & Humorous">Witty & Humorous</option>
+                        <option value="Luxury & Elegant">Luxury & Elegant</option>
+                        <option value="Urgent & Promotional">Urgent & Promotional</option>
+                    </select>
+                </div>
+
+                <!-- Search Orb Button -->
+                <button class="search-orb" onclick="startGeneration()" id="generateBtn" title="Generate Copy">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Extra Filter Options Grid (Contextual to tool) -->
+        <div class="extra-inputs-grid">
+            <div class="form-group-airbnb" id="platformGroup">
+                <label class="form-label-airbnb">Target Platform</label>
+                <select id="selectPlatform" class="text-input-airbnb">
+                    <option value="Google Search & Display">Google Search & Display</option>
+                    <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
+                    <option value="LinkedIn Ads">LinkedIn Ads</option>
+                    <option value="TikTok & Reels Short Copy">TikTok & Reels</option>
+                    <option value="General Digital Ads">General Digital Ads</option>
+                </select>
+            </div>
+
+            <div class="form-group-airbnb">
+                <label class="form-label-airbnb">Target Audience</label>
+                <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers">
+            </div>
+
+            <div class="form-group-airbnb" id="campaignGoalGroup">
+                <label class="form-label-airbnb">Key Selling Points / Offer</label>
+                <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
+            </div>
+        </div>
+
+        <!-- 3. Streamed Results Section -->
+        <section>
+            <div class="results-section-title">
+                <h2 class="text-display-md">Generated Results</h2>
+                <span class="text-caption-sm" id="statusIndicator">Ready</span>
+            </div>
+
+            <!-- Output Property Card -->
+            <div class="output-card" id="outputCard">
+                <div class="output-card-header">
+                    <div class="guest-favorite-badge">
+                        <span class="badge-star">★</span>
+                        <span>AI Draft • <span id="cardModelName">{{ active_model }}</span></span>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="btn-secondary-airbnb" onclick="copyContentToClipboard()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="copyBtnText">Copy Copy</span>
+                        </button>
+
+                        <button class="heart-button" id="saveHeart" onclick="toggleSaveState()" title="Save to favorites">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Streamed Markdown Content Container -->
+                <div class="output-content" id="outputContent">
+                    <p style="color: var(--color-muted); font-style: italic;">Enter details in the search console above and click the red Rausch orb to generate copy in real-time...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 4. Settings Modal (API Key & Model Configuration) -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="text-title-md">OpenRouter Settings</h3>
+                <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
+            </div>
+
+            <div class="form-group-airbnb" style="margin-bottom: 16px;">
+                <label class="form-label-airbnb">OpenRouter API Key</label>
+                <input type="password" id="inputApiKey" class="text-input-airbnb" placeholder="sk-or-v1-..." value="{{ api_key_masked }}">
+                <span class="text-caption-sm" style="margin-top: 4px;">Get a free API key at <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--color-primary); text-decoration: underline;">openrouter.ai/keys</a></span>
+            </div>
+
+            <div class="form-group-airbnb" style="margin-bottom: 24px;">
+                <label class="form-label-airbnb">Active LLM Model (Strictly from .env)</label>
+                <input type="text" id="displayModel" class="text-input-airbnb" value="{{ active_model }}" readonly style="background-color: var(--color-surface-soft); color: var(--color-ink); font-weight: 600; cursor: not-allowed;">
+                <span class="text-caption-sm" style="margin-top: 4px; color: var(--color-muted);">Model is loaded strictly from the <code>LLM_MODEL</code> key in your <code>.env</code> file.</span>
+            </div>
+
+            <button class="btn-primary-airbnb" onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
+    <!-- 5. Airbnb Light Footer -->
+    <footer class="footer-light">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">OpenRouter Status</a></li>
+                    <li><a href="#">Prompt Engineering Guide</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Marketing Suite</h4>
+                <ul>
+                    <li><a href="#" onclick="switchTool('ad_copy')">Ad Copy Generator</a></li>
+                    <li><a href="#" onclick="switchTool('social_caption')">Social Media Captions</a></li>
+                    <li><a href="#" onclick="switchTool('email_campaign')">Email Campaigns</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Airbnb Design</h4>
+                <ul>
+                    <li><a href="#">Rausch Design Tokens</a></li>
+                    <li><a href="#">Airbnb Cereal VF Typography</a></li>
+                    <li><a href="#">Search Orb Pill System</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="legal-band">
+            <div>© 2026 Airbnb Growth Studio, Inc. • Privacy • Terms • Sitemap</div>
+            <div>English (US) • $ USD</div>
+        </div>
+    </footer>
+
+    <!-- 6. Client-Side Scripting (Tool Switching, SSE Streaming, Clipboard) -->
+    <script>
+        let currentTool = "ad_copy";
+        let isSaved = false;
+
+        const toolHeadings = {
+            ad_copy: {
+                title: "Generate High-Converting Ad Copy",
+                subtitle: "Craft persuasive headline variations and primary body text tuned for your target audience.",
+                placeholderBrand: "e.g. Coca-Cola Zero Sugar",
+                placeholderDesc: "Zero sugar, iconic Coca-Cola taste, ultimate refreshment"
+            },
+            social_caption: {
+                title: "Social Media Captions & Hashtags",
+                subtitle: "Engaging posts formatted with hashtags, emojis, and visual line breaks for peak engagement.",
+                placeholderBrand: "e.g. Summer Refresh Launch",
+                placeholderDesc: "Ice-cold drink on a sunny beach day"
+            },
+            email_campaign: {
+                title: "Email Marketing Campaigns",
+                subtitle: "High-open-rate subject lines and structured body copy with clear Call-to-Actions.",
+                placeholderBrand: "e.g. Coco Cola Club Pass",
+                placeholderDesc: "Exclusive summer discount code and VIP rewards"
+            },
+            product_description: {
+                title: "Product Descriptions & Specs",
+                subtitle: "Benefit-driven hooks and detailed specs formatted to turn visitors into buyers.",
+                placeholderBrand: "e.g. Coca-Cola Chill Tumbler",
+                placeholderDesc: "Double-wall vacuum insulated 24oz stainless steel flask"
+            },
+            slogan: {
+                title: "Promotional Slogans & Taglines",
+                subtitle: "Short, punchy, and memorable taglines that capture your brand's core essence.",
+                placeholderBrand: "e.g. Coca-Cola",
+                placeholderDesc: "Open Happiness, Taste the Feeling, Refreshing world"
+            },
+            marketing_ideas: {
+                title: "Out-of-the-Box Growth Ideas",
+                subtitle: "Creative campaign concepts, viral strategies, and execution roadmaps.",
+                placeholderBrand: "e.g. Local Beach Pop-up",
+                placeholderDesc: "Experiential sampling campaign for young adults"
+            }
+        };
+
+        function switchTool(toolKey, element) {
+            currentTool = toolKey;
+
+            // Update active tab styling
+            document.querySelectorAll('.product-tab').forEach(tab => tab.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            } else {
+                const targetTab = document.querySelector(`.product-tab[data-tool="${toolKey}"]`);
+                if (targetTab) targetTab.classList.add('active');
+            }
+
+            // Update headings & placeholders
+            const config = toolHeadings[toolKey];
+            if (config) {
+                document.getElementById('toolHeading').innerText = config.title;
+                document.getElementById('toolSubtitle').innerText = config.subtitle;
+                document.getElementById('inputBrandName').placeholder = config.placeholderBrand;
+                document.getElementById('inputDescription').placeholder = config.placeholderDesc;
+            }
+        }
+
+        async function startGeneration() {
+            const outputContent = document.getElementById('outputContent');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const generateBtn = document.getElementById('generateBtn');
+
+            const payload = {
+                tool_type: currentTool,
+                brand_name: document.getElementById('inputBrandName').value,
+                description: document.getElementById('inputDescription').value,
+                target_audience: document.getElementById('inputAudience').value,
+                key_points: document.getElementById('inputKeyPoints').value,
+                tone: document.getElementById('selectTone').value,
+                platform: document.getElementById('selectPlatform').value,
+                campaign_goal: document.getElementById('inputKeyPoints').value
+            };
+
+            // Reset UI state
+            outputContent.innerHTML = `
+                <div class="skeleton-line" style="width: 60%;"></div>
+                <div class="skeleton-line" style="width: 90%;"></div>
+                <div class="skeleton-line" style="width: 75%;"></div>
+            `;
+            statusIndicator.innerText = "Streaming response...";
+            statusIndicator.style.color = "var(--color-primary)";
+            generateBtn.disabled = true;
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+                let accumulatedText = "";
+
+                outputContent.innerHTML = ""; // Clear skeletons
+
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const dataStr = line.slice(6).trim();
+                            if (dataStr === '[DONE]') {
+                                break;
+                            }
+                            try {
+                                const parsed = JSON.parse(dataStr);
+                                if (parsed.content) {
+                                    accumulatedText += parsed.content;
+                                    outputContent.innerHTML = formatMarkdown(accumulatedText);
+                                }
+                            } catch (e) {
+                                // Sometimes raw strings come
+                                accumulatedText += dataStr;
+                                outputContent.innerHTML = formatMarkdown(accumulatedText);
+                            }
+                        }
+                    }
+                }
+
+                statusIndicator.innerText = "Completed";
+                statusIndicator.style.color = "#008a05";
+
+            } catch (error) {
+                console.error("Streaming error:", error);
+                outputContent.innerHTML = `<p style="color: var(--color-error)">Failed to generate copy: ${error.message}</p>`;
+                statusIndicator.innerText = "Error";
+                statusIndicator.style.color = "var(--color-error)";
+            } finally {
+                generateBtn.disabled = false;
+            }
+        }
+
+        // Full Markdown parser using marked.js with post-processing
+        function formatMarkdown(text) {
+            if (!text) return "";
+
+            let formattedText = text;
+            
+            // Check for unclosed code block (odd number of ```) during live streaming
+            const fenceMatches = (formattedText.match(/```/g) || []).length;
+            if (fenceMatches % 2 !== 0) {
+                formattedText += "\n```";
+            }
+
+            let html = "";
+            if (typeof marked !== 'undefined' && marked.parse) {
+                marked.setOptions({ gfm: true, breaks: true });
+                html = marked.parse(formattedText);
+            } else {
+                html = fallbackMarkdown(formattedText);
+            }
+
+            // Post-process code blocks to inject Airbnb copyable snippet cards
+            html = html.replace(/<pre><code(?:\s+class="[^"]*")?>([\s\S]*?)<\/code><\/pre>/gim, function(match, codeContent) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = codeContent;
+                const rawCode = tempDiv.textContent || tempDiv.innerText || "";
+                const encodedCode = encodeURIComponent(rawCode.trim());
+
+                return `<div class="copyable-code-block">
+                            <pre><code>${codeContent}</code></pre>
+                            <button class="copy-snippet-btn" onclick="copySnippet(this)" data-code="${encodedCode}">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                <span>Copy</span>
+                            </button>
+                        </div>`;
+            });
+
+            // Post-process <hr> tags to add airbnb-hr class
+            html = html.replace(/<hr\s*\/?>/gim, '<hr class="airbnb-hr">');
+
+            return html;
+        }
+
+        function fallbackMarkdown(text) {
+            let html = text
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+                .replace(/^(\-\-\-|\*\*\*|\_\_\_)$/gim, '<hr class="airbnb-hr">');
+            return html;
+        }
+
+        function copySnippet(btn) {
+            const rawCode = decodeURIComponent(btn.getAttribute('data-code'));
+            navigator.clipboard.writeText(rawCode).then(() => {
+                const span = btn.querySelector('span');
+                const oldText = span.innerText;
+                span.innerText = "Copied!";
+                btn.style.backgroundColor = "var(--color-primary)";
+                btn.style.color = "var(--color-on-primary)";
+                setTimeout(() => {
+                    span.innerText = oldText;
+                    btn.style.backgroundColor = "var(--color-canvas)";
+                    btn.style.color = "var(--color-ink)";
+                }, 2000);
+            });
+        }
+
+        function copyContentToClipboard() {
+            const contentText = document.getElementById('outputContent').innerText;
+            if (!contentText) return;
+
+            navigator.clipboard.writeText(contentText).then(() => {
+                const btnText = document.getElementById('copyBtnText');
+                btnText.innerText = "Copied!";
+                setTimeout(() => { btnText.innerText = "Copy Copy"; }, 2000);
+            });
+        }
+
+        function toggleSaveState() {
+            const heart = document.getElementById('saveHeart');
+            isSaved = !isSaved;
+            if (isSaved) {
+                heart.classList.add('saved');
+            } else {
+                heart.classList.remove('saved');
+            }
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        async function saveSettings() {
+            const apiKey = document.getElementById('inputApiKey').value;
+
+            try {
+                const res = await fetch('/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ api_key: apiKey })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    document.getElementById('activeModelLabel').innerText = data.active_model;
+                    document.getElementById('cardModelName').innerText = data.active_model;
+                    document.getElementById('displayModel').value = data.active_model;
+                    closeSettingsModal();
+                    alert("Settings updated successfully!");
+                }
+            } catch (e) {
+                alert("Failed to save settings: " + e.message);
+            }
+        }
+    </script>
+</body>
+</html>
