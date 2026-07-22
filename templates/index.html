@@ -87,7 +87,31 @@
             <p class="hero-subtitle" id="toolSubtitle">Craft persuasive headline variations and primary body text tuned for your target audience.</p>
         </section>
 
-        <!-- Signature Airbnb Search-Bar Pill Console -->
+        <!-- Filter Options Grid (Target Platform, Target Audience, Key Selling Points) -->
+        <div class="extra-inputs-grid">
+            <div class="form-group-airbnb" id="platformGroup">
+                <label class="form-label-airbnb">Target Platform</label>
+                <select id="selectPlatform" class="text-input-airbnb">
+                    <option value="Google Search & Display">Google Search & Display</option>
+                    <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
+                    <option value="LinkedIn Ads">LinkedIn Ads</option>
+                    <option value="TikTok & Reels Short Copy">TikTok & Reels</option>
+                    <option value="General Digital Ads">General Digital Ads</option>
+                </select>
+            </div>
+
+            <div class="form-group-airbnb">
+                <label class="form-label-airbnb">Target Audience</label>
+                <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers">
+            </div>
+
+            <div class="form-group-airbnb" id="campaignGoalGroup">
+                <label class="form-label-airbnb">Key Selling Points / Offer</label>
+                <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
+            </div>
+        </div>
+
+        <!-- Signature Airbnb Search-Bar Pill Console (Placed below Target Audience) -->
         <div class="search-bar-container">
             <div class="search-bar-pill">
                 <!-- Segment 1: Brand / Product Name -->
@@ -121,30 +145,6 @@
                         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
                     </svg>
                 </button>
-            </div>
-        </div>
-
-        <!-- Extra Filter Options Grid (Contextual to tool) -->
-        <div class="extra-inputs-grid">
-            <div class="form-group-airbnb" id="platformGroup">
-                <label class="form-label-airbnb">Target Platform</label>
-                <select id="selectPlatform" class="text-input-airbnb">
-                    <option value="Google Search & Display">Google Search & Display</option>
-                    <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
-                    <option value="LinkedIn Ads">LinkedIn Ads</option>
-                    <option value="TikTok & Reels Short Copy">TikTok & Reels</option>
-                    <option value="General Digital Ads">General Digital Ads</option>
-                </select>
-            </div>
-
-            <div class="form-group-airbnb">
-                <label class="form-label-airbnb">Target Audience</label>
-                <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers">
-            </div>
-
-            <div class="form-group-airbnb" id="campaignGoalGroup">
-                <label class="form-label-airbnb">Key Selling Points / Offer</label>
-                <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
             </div>
         </div>
 
