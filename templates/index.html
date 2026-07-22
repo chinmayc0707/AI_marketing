@@ -368,10 +368,19 @@
 
             let formattedText = text;
             
-            // Check for unclosed code block (odd number of ```) during live streaming
-            const fenceMatches = (formattedText.match(/```/g) || []).length;
-            if (fenceMatches % 2 !== 0) {
-                formattedText += "\n```";
+            // If streaming, append cursor character '▌' before Markdown parsing so it stays strictly inline
+            if (isStreaming) {
+                const fenceMatches = (formattedText.match(/```/g) || []).length;
+                if (fenceMatches % 2 !== 0) {
+                    formattedText = text + " ▌\n```";
+                } else {
+                    formattedText = text + " ▌";
+                }
+            } else {
+                const fenceMatches = (formattedText.match(/```/g) || []).length;
+                if (fenceMatches % 2 !== 0) {
+                    formattedText += "\n```";
+                }
             }
 
             let html = "";
@@ -382,12 +391,16 @@
                 html = fallbackMarkdown(formattedText);
             }
 
+            // Replace cursor character ▌ with styled blinking span
+            html = html.replace(/▌/g, '<span class="streaming-cursor">▌</span>');
+
             // Post-process code blocks to inject Airbnb copyable snippet cards
             html = html.replace(/<pre><code(?:\s+class="[^"]*")?>([\s\S]*?)<\/code><\/pre>/gim, function(match, codeContent) {
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = codeContent;
                 const rawCode = tempDiv.textContent || tempDiv.innerText || "";
-                const encodedCode = encodeURIComponent(rawCode.trim());
+                const cleanCode = rawCode.replace(/▌/g, '').trim();
+                const encodedCode = encodeURIComponent(cleanCode);
 
                 return `<div class="copyable-code-block">
                             <pre><code>${codeContent}</code></pre>
@@ -400,15 +413,6 @@
 
             // Post-process <hr> tags to add airbnb-hr class
             html = html.replace(/<hr\s*\/?>/gim, '<hr class="airbnb-hr">');
-
-            // Append blinking cursor char ▌ while streaming directly after the last word
-            if (isStreaming) {
-                if (!/(<\/(?:p|h1|h2|h3|h4|li|code|div)>(?:\s*)$)/i.test(html)) {
-                    html += '<span class="streaming-cursor">▌</span>';
-                } else {
-                    html = html.replace(/(<\/(?:p|h1|h2|h3|h4|li|code|div)>(?:\s*)$)/i, '<span class="streaming-cursor">▌</span>$1');
-                }
-            }
 
             return html;
         }
