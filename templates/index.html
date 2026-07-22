@@ -68,16 +68,6 @@
             </div>
         </nav>
 
-        <div class="nav-actions">
-            <div class="model-status-pill" title="Active Model from .env">
-                <span class="status-dot"></span>
-                <span id="activeModelLabel">{{ active_model }}</span>
-            </div>
-
-            <button class="icon-btn-circle" onclick="openSettingsModal()" title="Configure API Key & Model">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
-        </div>
     </header>
 
     <!-- 2. Main Page Content -->
@@ -160,7 +150,7 @@
                 <div class="output-card-header">
                     <div class="guest-favorite-badge">
                         <span class="badge-star">★</span>
-                        <span>AI Draft • <span id="cardModelName">{{ active_model }}</span></span>
+                        <span>AI Draft</span>
                     </div>
 
                     <div class="card-actions">
@@ -182,30 +172,6 @@
             </div>
         </section>
     </main>
-
-    <!-- 4. Settings Modal (API Key & Model Configuration) -->
-    <div class="modal-overlay" id="settingsModal">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 class="text-title-md">OpenRouter Settings</h3>
-                <button class="modal-close" onclick="closeSettingsModal()">&times;</button>
-            </div>
-
-            <div class="form-group-airbnb" style="margin-bottom: 16px;">
-                <label class="form-label-airbnb">OpenRouter API Key</label>
-                <input type="password" id="inputApiKey" class="text-input-airbnb" placeholder="sk-or-v1-..." value="{{ api_key_masked }}">
-                <span class="text-caption-sm" style="margin-top: 4px;">Get a free API key at <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--color-primary); text-decoration: underline;">openrouter.ai/keys</a></span>
-            </div>
-
-            <div class="form-group-airbnb" style="margin-bottom: 24px;">
-                <label class="form-label-airbnb">Active LLM Model (Strictly from .env)</label>
-                <input type="text" id="displayModel" class="text-input-airbnb" value="{{ active_model }}" readonly style="background-color: var(--color-surface-soft); color: var(--color-ink); font-weight: 600; cursor: not-allowed;">
-                <span class="text-caption-sm" style="margin-top: 4px; color: var(--color-muted);">Model is loaded strictly from the <code>LLM_MODEL</code> key in your <code>.env</code> file.</span>
-            </div>
-
-            <button class="btn-primary-airbnb" onclick="saveSettings()">Save Settings</button>
-        </div>
-    </div>
 
     <!-- 5. Airbnb Light Footer -->
     <footer class="footer-light">
@@ -495,35 +461,6 @@
             }
         }
 
-        function openSettingsModal() {
-            document.getElementById('settingsModal').classList.add('active');
-        }
-
-        function closeSettingsModal() {
-            document.getElementById('settingsModal').classList.remove('active');
-        }
-
-        async function saveSettings() {
-            const apiKey = document.getElementById('inputApiKey').value;
-
-            try {
-                const res = await fetch('/settings', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ api_key: apiKey })
-                });
-                const data = await res.json();
-                if (data.status === 'success') {
-                    document.getElementById('activeModelLabel').innerText = data.active_model;
-                    document.getElementById('cardModelName').innerText = data.active_model;
-                    document.getElementById('displayModel').value = data.active_model;
-                    closeSettingsModal();
-                    alert("Settings updated successfully!");
-                }
-            } catch (e) {
-                alert("Failed to save settings: " + e.message);
-            }
-        }
     </script>
 </body>
 </html>
