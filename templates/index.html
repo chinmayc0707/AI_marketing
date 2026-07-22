@@ -166,10 +166,30 @@
 
         <!-- Prompt-Based Input Mode (hidden by default) -->
         <div id="promptInputMode" style="display: none;">
+            <!-- Prompt by Form (auto-generated from form fields) -->
+            <div class="prompt-editor-container" id="formPromptPreviewContainer">
+                <div class="prompt-editor-header">
+                    <span class="prompt-editor-label">Prompt by Form</span>
+                    <span class="prompt-editor-hint">Auto-generated from your form inputs</span>
+                    <div class="form-prompt-actions">
+                        <button class="form-prompt-copy-btn" onclick="copyFormPrompt()" title="Copy to clipboard">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <span id="formPromptCopyText">Copy</span>
+                        </button>
+                        <button class="form-prompt-copy-btn" onclick="useFormPrompt()" title="Use as custom prompt">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                            <span>Use as Base</span>
+                        </button>
+                    </div>
+                </div>
+                <pre class="form-prompt-preview" id="formPromptPreview">Loading...</pre>
+            </div>
+
+            <!-- Custom Prompt Editor -->
             <div class="prompt-editor-container">
                 <div class="prompt-editor-header">
                     <span class="prompt-editor-label">Custom Prompt</span>
-                    <span class="prompt-editor-hint">Write your own prompt directly — this overrides all form fields</span>
+                    <span class="prompt-editor-hint">Write your own prompt — this overrides the form-generated one</span>
                 </div>
                 <textarea id="rawPromptTextarea" class="prompt-editor-textarea" rows="8" placeholder="Write your custom marketing prompt here...&#10;&#10;e.g. Act as an expert copywriter. Generate 3 high-converting ad headlines for Coca-Cola Zero Sugar targeting Gen Z on Instagram. Use a casual, bold tone."></textarea>
                 <div class="prompt-editor-actions">
@@ -303,7 +323,46 @@
                 promptMode.style.display = '';
                 formBtn.classList.remove('active');
                 promptBtn.classList.add('active');
+                // Auto-fetch the form-generated prompt
+                loadFormPromptPreview();
             }
+        }
+
+        async function loadFormPromptPreview() {
+            const preview = document.getElementById('formPromptPreview');
+            preview.textContent = 'Loading...';
+            const payload = buildPayloadFromForm();
+            try {
+                const res = await fetch('/preview-prompt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                const fullPrompt = `[System]\n${data.system_prompt}\n\n[User]\n${data.user_prompt}`;
+                preview.textContent = fullPrompt;
+            } catch (err) {
+                preview.textContent = 'Failed to load prompt preview.';
+            }
+        }
+
+        function copyFormPrompt() {
+            const text = document.getElementById('formPromptPreview').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('formPromptCopyText');
+                btn.innerText = 'Copied!';
+                setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
+            });
+        }
+
+        function useFormPrompt() {
+            const text = document.getElementById('formPromptPreview').textContent;
+            // Extract just the [User] portion so they can edit it
+            const userMatch = text.match(/\[User\]\n([\s\S]*)/);
+            const userPrompt = userMatch ? userMatch[1].trim() : text;
+            document.getElementById('rawPromptTextarea').value = userPrompt;
+            // Scroll to the textarea
+            document.getElementById('rawPromptTextarea').focus();
         }
 
         function buildPayloadFromForm() {
