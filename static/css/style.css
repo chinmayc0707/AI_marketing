@@ -682,10 +682,10 @@ textarea {
 
 /* Streaming Cursor Indicator (▌) */
 .streaming-cursor {
-  display: inline-block;
+  display: inline;
   color: var(--color-primary);
   font-weight: 700;
-  margin-left: 3px;
+  margin-left: 2px;
   animation: cursorBlink 0.8s infinite;
 }
 

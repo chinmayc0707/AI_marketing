@@ -435,9 +435,13 @@
             // Post-process <hr> tags to add airbnb-hr class
             html = html.replace(/<hr\s*\/?>/gim, '<hr class="airbnb-hr">');
 
-            // Append blinking cursor char ▌ while streaming
+            // Append blinking cursor char ▌ while streaming directly after the last word
             if (isStreaming) {
-                html += '<span class="streaming-cursor">▌</span>';
+                if (!/(<\/(?:p|h1|h2|h3|h4|li|code|div)>(?:\s*)$)/i.test(html)) {
+                    html += '<span class="streaming-cursor">▌</span>';
+                } else {
+                    html = html.replace(/(<\/(?:p|h1|h2|h3|h4|li|code|div)>(?:\s*)$)/i, '<span class="streaming-cursor">▌</span>$1');
+                }
             }
 
             return html;
