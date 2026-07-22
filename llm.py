@@ -3,26 +3,13 @@ import json
 import requests
 from dotenv import load_dotenv
 
-def stream_marketing_content(tool_type, inputs):
+def build_prompt(tool_type, inputs):
     """
-    Formulates a prompt for the specific tool_type and returns a generator
-    yielding response chunks from OpenRouter. Strictly reads LLM_MODEL from .env.
+    Build and return the system prompt and formatted user prompt
+    for a given tool_type and inputs dict.
+    Returns a dict: { "system_prompt": str, "user_prompt": str }
+    or raises ValueError for invalid tool_type.
     """
-    # Always reload env variables so any user changes to .env take effect immediately
-    load_dotenv(override=True)
-    
-    api_key = os.getenv("OPENROUTER_API_KEY", "").strip("'\"").strip()
-    model = os.getenv("LLM_MODEL", "").strip("'\"").strip()
-    
-    if not api_key:
-        yield "Error: **OPENROUTER_API_KEY** is not set in `.env`. Please add your key to `.env` or use the settings modal."
-        return
-
-    if not model:
-        yield "Error: **LLM_MODEL** is not set in `.env`. Please specify a model name in `.env` (e.g. `LLM_MODEL=google/gemma-4-31b-it:free`)."
-        return
-
-    # Prompt definitions for each tool type
     system_prompt = (
         "You are an elite, high-converting growth marketer and copywriter.\n"
         "IMPORTANT FORMATTING INSTRUCTIONS:\n"
@@ -106,8 +93,7 @@ def stream_marketing_content(tool_type, inputs):
     }
     
     if tool_type not in prompts:
-        yield f"Error: Invalid tool type '{tool_type}' requested."
-        return
+        raise ValueError(f"Invalid tool type '{tool_type}'")
         
     formatted_prompt = prompts[tool_type].format(
         brand_name=inputs.get("brand_name", ""),
@@ -118,6 +104,40 @@ def stream_marketing_content(tool_type, inputs):
         platform=inputs.get("platform", "General"),
         campaign_goal=inputs.get("campaign_goal", "Brand Awareness")
     )
+
+    return {
+        "system_prompt": system_prompt,
+        "user_prompt": formatted_prompt
+    }
+
+
+def stream_marketing_content(tool_type, inputs):
+    """
+    Formulates a prompt for the specific tool_type and returns a generator
+    yielding response chunks from OpenRouter. Strictly reads LLM_MODEL from .env.
+    """
+    # Always reload env variables so any user changes to .env take effect immediately
+    load_dotenv(override=True)
+    
+    api_key = os.getenv("OPENROUTER_API_KEY", "").strip("'\"").strip()
+    model = os.getenv("LLM_MODEL", "").strip("'\"").strip()
+    
+    if not api_key:
+        yield "Error: **OPENROUTER_API_KEY** is not set in `.env`. Please add your key to `.env` or use the settings modal."
+        return
+
+    if not model:
+        yield "Error: **LLM_MODEL** is not set in `.env`. Please specify a model name in `.env` (e.g. `LLM_MODEL=google/gemma-4-31b-it:free`)."
+        return
+
+    try:
+        prompt_data = build_prompt(tool_type, inputs)
+    except ValueError as e:
+        yield f"Error: {str(e)}"
+        return
+
+    system_prompt = prompt_data["system_prompt"]
+    formatted_prompt = prompt_data["user_prompt"]
 
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -131,6 +151,78 @@ def stream_marketing_content(tool_type, inputs):
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": formatted_prompt}
+        ],
+        "stream": True
+    }
+
+    try:
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=data,
+            stream=True,
+            timeout=45
+        )
+        
+        if response.status_code != 200:
+            yield f"Error from OpenRouter API (Status {response.status_code}): {response.text}"
+            return
+
+        for line in response.iter_lines():
+            if line:
+                line_str = line.decode('utf-8')
+                if line_str.startswith("data: "):
+                    data_content = line_str[6:]
+                    if data_content.strip() == "[DONE]":
+                        break
+                    try:
+                        chunk = json.loads(data_content)
+                        text = chunk['choices'][0]['delta'].get('content', '')
+                        if text:
+                            yield text
+                    except Exception:
+                        pass
+    except Exception as e:
+        yield f"Connection Error: {str(e)}"
+
+
+def stream_raw_prompt(raw_prompt):
+    """
+    Stream LLM response using a raw user-supplied prompt string.
+    Uses the same system prompt as form-based generation.
+    """
+    load_dotenv(override=True)
+    
+    api_key = os.getenv("OPENROUTER_API_KEY", "").strip("'\"").strip()
+    model = os.getenv("LLM_MODEL", "").strip("'\"").strip()
+    
+    if not api_key:
+        yield "Error: **OPENROUTER_API_KEY** is not set in `.env`."
+        return
+
+    if not model:
+        yield "Error: **LLM_MODEL** is not set in `.env`."
+        return
+
+    system_prompt = (
+        "You are an elite, high-converting growth marketer and copywriter.\n"
+        "IMPORTANT FORMATTING INSTRUCTIONS:\n"
+        "1. Put every final copy inside a markdown code block (using ```) so the user can easily copy individual quotes with one click.\n"
+        "2. Separate distinct options or sections with horizontal line dividers (using ---)."
+    )
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:5000",
+        "X-Title": "Airbnb Marketing Generator",
+    }
+
+    data = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": raw_prompt}
         ],
         "stream": True
     }

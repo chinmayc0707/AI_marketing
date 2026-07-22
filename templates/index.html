@@ -77,69 +77,134 @@
             <p class="hero-subtitle" id="toolSubtitle">Craft persuasive headline variations and primary body text tuned for your target audience.</p>
         </section>
 
-        <!-- Filter Options Grid (Target Platform, Target Audience, Key Selling Points) -->
-        <div class="extra-inputs-grid">
-            <div class="form-group-airbnb" id="platformGroup">
-                <label class="form-label-airbnb">Target Platform</label>
-                <select id="selectPlatform" class="text-input-airbnb">
-                    <option value="Google Search & Display">Google Search & Display</option>
-                    <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
-                    <option value="LinkedIn Ads">LinkedIn Ads</option>
-                    <option value="TikTok & Reels Short Copy">TikTok & Reels</option>
-                    <option value="General Digital Ads">General Digital Ads</option>
-                </select>
+        <!-- Input Mode Toggle & View Prompt -->
+        <div class="input-mode-bar">
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="modeFormBtn" onclick="switchInputMode('form')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    <span>Form</span>
+                </button>
+                <button class="mode-btn" id="modePromptBtn" onclick="switchInputMode('prompt')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                    <span>Prompt</span>
+                </button>
             </div>
-
-            <div class="form-group-airbnb">
-                <label class="form-label-airbnb">Target Audience</label>
-                <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers">
-            </div>
-
-            <div class="form-group-airbnb" id="campaignGoalGroup">
-                <label class="form-label-airbnb">Key Selling Points / Offer</label>
-                <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
-            </div>
-
-            <div class="form-group-airbnb" id="additionalDetailsGroup">
-                <label class="form-label-airbnb">Additional Details</label>
-                <input type="text" id="inputAdditionalDetails" class="text-input-airbnb" placeholder="e.g. Limited edition, call to action, promo code" value="">
-            </div>
+            <button class="view-prompt-btn" id="viewPromptBtn" onclick="showRawPrompt()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>View Raw Prompt</span>
+            </button>
         </div>
 
-        <!-- Signature Airbnb Search-Bar Pill Console (Placed below Target Audience) -->
-        <div class="search-bar-container">
-            <div class="search-bar-pill">
-                <!-- Segment 1: Brand / Product Name -->
-                <div class="search-field-segment">
-                    <span class="segment-label">PRODUCT / BRAND</span>
-                    <input type="text" id="inputBrandName" class="segment-input" placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar">
-                </div>
-
-                <!-- Segment 2: Description / Core Details -->
-                <div class="search-field-segment">
-                    <span class="segment-label">CORE DETAILS</span>
-                    <input type="text" id="inputDescription" class="segment-input" placeholder="e.g. Zero calories, iconic taste, ice-cold refresh" value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment">
-                </div>
-
-                <!-- Segment 3: Audience & Voice Tone -->
-                <div class="search-field-segment">
-                    <span class="segment-label">TONE & AUDIENCE</span>
-                    <select id="selectTone" class="segment-select">
-                        <option value="Energetic & Bold">Energetic & Bold</option>
-                        <option value="Professional & Persuasive">Professional & Persuasive</option>
-                        <option value="Casual & Friendly">Casual & Friendly</option>
-                        <option value="Witty & Humorous">Witty & Humorous</option>
-                        <option value="Luxury & Elegant">Luxury & Elegant</option>
-                        <option value="Urgent & Promotional">Urgent & Promotional</option>
+        <!-- Form-Based Input Mode (default) -->
+        <div id="formInputMode">
+            <!-- Filter Options Grid (Target Platform, Target Audience, Key Selling Points) -->
+            <div class="extra-inputs-grid">
+                <div class="form-group-airbnb" id="platformGroup">
+                    <label class="form-label-airbnb">Target Platform</label>
+                    <select id="selectPlatform" class="text-input-airbnb">
+                        <option value="Google Search & Display">Google Search & Display</option>
+                        <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
+                        <option value="LinkedIn Ads">LinkedIn Ads</option>
+                        <option value="TikTok & Reels Short Copy">TikTok & Reels</option>
+                        <option value="General Digital Ads">General Digital Ads</option>
                     </select>
                 </div>
 
-                <!-- Search Orb Button -->
-                <button class="search-orb" onclick="startGeneration()" id="generateBtn" title="Generate Copy">
-                    <svg viewBox="0 0 24 24" width="20" height="20">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                    </svg>
-                </button>
+                <div class="form-group-airbnb">
+                    <label class="form-label-airbnb">Target Audience</label>
+                    <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers">
+                </div>
+
+                <div class="form-group-airbnb" id="campaignGoalGroup">
+                    <label class="form-label-airbnb">Key Selling Points / Offer</label>
+                    <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
+                </div>
+
+                <div class="form-group-airbnb" id="additionalDetailsGroup">
+                    <label class="form-label-airbnb">Additional Details</label>
+                    <input type="text" id="inputAdditionalDetails" class="text-input-airbnb" placeholder="e.g. Limited edition, call to action, promo code" value="">
+                </div>
+            </div>
+
+            <!-- Signature Airbnb Search-Bar Pill Console (Placed below Target Audience) -->
+            <div class="search-bar-container">
+                <div class="search-bar-pill">
+                    <!-- Segment 1: Brand / Product Name -->
+                    <div class="search-field-segment">
+                        <span class="segment-label">PRODUCT / BRAND</span>
+                        <input type="text" id="inputBrandName" class="segment-input" placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar">
+                    </div>
+
+                    <!-- Segment 2: Description / Core Details -->
+                    <div class="search-field-segment">
+                        <span class="segment-label">CORE DETAILS</span>
+                        <input type="text" id="inputDescription" class="segment-input" placeholder="e.g. Zero calories, iconic taste, ice-cold refresh" value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment">
+                    </div>
+
+                    <!-- Segment 3: Audience & Voice Tone -->
+                    <div class="search-field-segment">
+                        <span class="segment-label">TONE & AUDIENCE</span>
+                        <select id="selectTone" class="segment-select">
+                            <option value="Energetic & Bold">Energetic & Bold</option>
+                            <option value="Professional & Persuasive">Professional & Persuasive</option>
+                            <option value="Casual & Friendly">Casual & Friendly</option>
+                            <option value="Witty & Humorous">Witty & Humorous</option>
+                            <option value="Luxury & Elegant">Luxury & Elegant</option>
+                            <option value="Urgent & Promotional">Urgent & Promotional</option>
+                        </select>
+                    </div>
+
+                    <!-- Search Orb Button -->
+                    <button class="search-orb" onclick="startGeneration()" id="generateBtn" title="Generate Copy">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt-Based Input Mode (hidden by default) -->
+        <div id="promptInputMode" style="display: none;">
+            <div class="prompt-editor-container">
+                <div class="prompt-editor-header">
+                    <span class="prompt-editor-label">Custom Prompt</span>
+                    <span class="prompt-editor-hint">Write your own prompt directly — this overrides all form fields</span>
+                </div>
+                <textarea id="rawPromptTextarea" class="prompt-editor-textarea" rows="8" placeholder="Write your custom marketing prompt here...&#10;&#10;e.g. Act as an expert copywriter. Generate 3 high-converting ad headlines for Coca-Cola Zero Sugar targeting Gen Z on Instagram. Use a casual, bold tone."></textarea>
+                <div class="prompt-editor-actions">
+                    <button class="search-orb" onclick="startGeneration()" id="generateBtnPrompt" title="Generate Copy">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Raw Prompt Preview Modal -->
+        <div class="prompt-modal-overlay" id="promptModal" onclick="closePromptModal(event)">
+            <div class="prompt-modal">
+                <div class="prompt-modal-header">
+                    <h3>Raw Prompt Preview</h3>
+                    <button class="prompt-modal-close" onclick="document.getElementById('promptModal').classList.remove('active')">&times;</button>
+                </div>
+                <div class="prompt-modal-body">
+                    <div class="prompt-section">
+                        <span class="prompt-section-label">SYSTEM PROMPT</span>
+                        <pre class="prompt-section-content" id="previewSystemPrompt"></pre>
+                    </div>
+                    <div class="prompt-section">
+                        <span class="prompt-section-label">USER PROMPT</span>
+                        <pre class="prompt-section-content" id="previewUserPrompt"></pre>
+                    </div>
+                </div>
+                <div class="prompt-modal-footer">
+                    <button class="btn-secondary-airbnb" onclick="copyPromptToClipboard()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span id="copyPromptBtnText">Copy Full Prompt</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -219,6 +284,91 @@
     <script>
         let currentTool = "ad_copy";
         let isSaved = false;
+        let currentInputMode = "form"; // "form" or "prompt"
+
+        function switchInputMode(mode) {
+            currentInputMode = mode;
+            const formMode = document.getElementById('formInputMode');
+            const promptMode = document.getElementById('promptInputMode');
+            const formBtn = document.getElementById('modeFormBtn');
+            const promptBtn = document.getElementById('modePromptBtn');
+
+            if (mode === 'form') {
+                formMode.style.display = '';
+                promptMode.style.display = 'none';
+                formBtn.classList.add('active');
+                promptBtn.classList.remove('active');
+            } else {
+                formMode.style.display = 'none';
+                promptMode.style.display = '';
+                formBtn.classList.remove('active');
+                promptBtn.classList.add('active');
+            }
+        }
+
+        function buildPayloadFromForm() {
+            const descVal = (document.getElementById('inputDescription') ? document.getElementById('inputDescription').value : '').trim();
+            const kpVal = (document.getElementById('inputKeyPoints') ? document.getElementById('inputKeyPoints').value : '').trim();
+            const extraVal = (document.getElementById('inputAdditionalDetails') ? document.getElementById('inputAdditionalDetails').value : '').trim();
+            
+            let mergedDescParts = [];
+            if (descVal) mergedDescParts.push(descVal);
+            if (kpVal && kpVal !== descVal) mergedDescParts.push(kpVal);
+            if (extraVal) mergedDescParts.push(`Additional Details: ${extraVal}`);
+            const mergedDesc = mergedDescParts.join(' • ');
+
+            const audienceVal = (document.getElementById('inputAudience') ? document.getElementById('inputAudience').value : '').trim();
+            const toneVal = (document.getElementById('selectTone') ? document.getElementById('selectTone').value : '').trim();
+            let mergedAudienceParts = [];
+            if (audienceVal) mergedAudienceParts.push(`Target Audience: ${audienceVal}`);
+            if (toneVal) mergedAudienceParts.push(`Tone: ${toneVal}`);
+            const mergedAudience = mergedAudienceParts.join(', ');
+
+            return {
+                tool_type: currentTool,
+                brand_name: document.getElementById('inputBrandName').value,
+                description: mergedDesc,
+                target_audience: mergedAudience,
+                key_points: mergedDesc,
+                tone: toneVal,
+                platform: document.getElementById('selectPlatform') ? document.getElementById('selectPlatform').value : 'General',
+                campaign_goal: mergedDesc
+            };
+        }
+
+        async function showRawPrompt() {
+            const payload = buildPayloadFromForm();
+            try {
+                const res = await fetch('/preview-prompt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                document.getElementById('previewSystemPrompt').textContent = data.system_prompt || '';
+                document.getElementById('previewUserPrompt').textContent = data.user_prompt || '';
+                document.getElementById('promptModal').classList.add('active');
+            } catch (err) {
+                console.error('Failed to fetch prompt preview:', err);
+            }
+        }
+
+        function closePromptModal(event) {
+            if (event.target === document.getElementById('promptModal')) {
+                document.getElementById('promptModal').classList.remove('active');
+            }
+        }
+
+        function copyPromptToClipboard() {
+            const sys = document.getElementById('previewSystemPrompt').textContent;
+            const usr = document.getElementById('previewUserPrompt').textContent;
+            const fullPrompt = `[SYSTEM PROMPT]\n${sys}\n\n[USER PROMPT]\n${usr}`;
+            navigator.clipboard.writeText(fullPrompt).then(() => {
+                const btn = document.getElementById('copyPromptBtnText');
+                btn.innerText = 'Copied!';
+                setTimeout(() => { btn.innerText = 'Copy Full Prompt'; }, 2000);
+            });
+        }
 
         const toolHeadings = {
             ad_copy: {
@@ -285,34 +435,25 @@
             const outputContent = document.getElementById('outputContent');
             const statusIndicator = document.getElementById('statusIndicator');
             const generateBtn = document.getElementById('generateBtn');
+            const generateBtnPrompt = document.getElementById('generateBtnPrompt');
 
-            const descVal = (document.getElementById('inputDescription') ? document.getElementById('inputDescription').value : '').trim();
-            const kpVal = (document.getElementById('inputKeyPoints') ? document.getElementById('inputKeyPoints').value : '').trim();
-            const extraVal = (document.getElementById('inputAdditionalDetails') ? document.getElementById('inputAdditionalDetails').value : '').trim();
-            
-            let mergedDescParts = [];
-            if (descVal) mergedDescParts.push(descVal);
-            if (kpVal && kpVal !== descVal) mergedDescParts.push(kpVal);
-            if (extraVal) mergedDescParts.push(`Additional Details: ${extraVal}`);
-            const mergedDesc = mergedDescParts.join(' • ');
+            let fetchUrl, fetchBody;
 
-            const audienceVal = (document.getElementById('inputAudience') ? document.getElementById('inputAudience').value : '').trim();
-            const toneVal = (document.getElementById('selectTone') ? document.getElementById('selectTone').value : '').trim();
-            let mergedAudienceParts = [];
-            if (audienceVal) mergedAudienceParts.push(`Target Audience: ${audienceVal}`);
-            if (toneVal) mergedAudienceParts.push(`Tone: ${toneVal}`);
-            const mergedAudience = mergedAudienceParts.join(', ');
-
-            const payload = {
-                tool_type: currentTool,
-                brand_name: document.getElementById('inputBrandName').value,
-                description: mergedDesc,
-                target_audience: mergedAudience,
-                key_points: mergedDesc,
-                tone: toneVal,
-                platform: document.getElementById('selectPlatform') ? document.getElementById('selectPlatform').value : 'General',
-                campaign_goal: mergedDesc
-            };
+            if (currentInputMode === 'prompt') {
+                // Prompt mode: send raw text to /generate-raw
+                const rawText = document.getElementById('rawPromptTextarea').value.trim();
+                if (!rawText) {
+                    outputContent.innerHTML = `<p style="color: var(--color-error)">Please enter a prompt before generating.</p>`;
+                    return;
+                }
+                fetchUrl = '/generate-raw';
+                fetchBody = JSON.stringify({ prompt: rawText });
+            } else {
+                // Form mode: build payload from form fields
+                const payload = buildPayloadFromForm();
+                fetchUrl = '/generate';
+                fetchBody = JSON.stringify(payload);
+            }
 
             // Reset UI state
             outputContent.innerHTML = `
@@ -322,13 +463,14 @@
             `;
             statusIndicator.innerText = "Streaming response...";
             statusIndicator.style.color = "var(--color-primary)";
-            generateBtn.disabled = true;
+            if (generateBtn) generateBtn.disabled = true;
+            if (generateBtnPrompt) generateBtnPrompt.disabled = true;
 
             try {
-                const response = await fetch('/generate', {
+                const response = await fetch(fetchUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: fetchBody
                 });
 
                 if (!response.ok) {
@@ -380,7 +522,8 @@
                 statusIndicator.innerText = "Error";
                 statusIndicator.style.color = "var(--color-error)";
             } finally {
-                generateBtn.disabled = false;
+                if (generateBtn) generateBtn.disabled = false;
+                if (generateBtnPrompt) generateBtnPrompt.disabled = false;
             }
         }
 

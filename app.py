@@ -2,7 +2,7 @@ import os
 import json
 from flask import Flask, render_template, request, Response, jsonify
 from dotenv import load_dotenv, set_key
-from llm import stream_marketing_content
+from llm import stream_marketing_content, build_prompt
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path, override=True)
@@ -53,6 +53,48 @@ def generate():
 
     def generate_stream():
         for chunk in stream_marketing_content(tool_type, inputs):
+            payload = json.dumps({"content": chunk})
+            yield f"data: {payload}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return Response(generate_stream(), mimetype='text/event-stream')
+
+@app.route('/preview-prompt', methods=['POST'])
+def preview_prompt():
+    data = request.get_json() or {}
+    tool_type = data.get('tool_type', 'ad_copy')
+    
+    inputs = {
+        'brand_name': data.get('brand_name', ''),
+        'description': data.get('description', ''),
+        'target_audience': data.get('target_audience', ''),
+        'key_points': data.get('key_points', ''),
+        'tone': data.get('tone', 'Professional'),
+        'platform': data.get('platform', 'General'),
+        'campaign_goal': data.get('campaign_goal', 'Brand Awareness')
+    }
+
+    try:
+        prompt_data = build_prompt(tool_type, inputs)
+        return jsonify({
+            "system_prompt": prompt_data["system_prompt"],
+            "user_prompt": prompt_data["user_prompt"]
+        })
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/generate-raw', methods=['POST'])
+def generate_raw():
+    """Stream LLM response from a raw user-supplied prompt string."""
+    from llm import stream_raw_prompt
+    data = request.get_json() or {}
+    raw_prompt = data.get('prompt', '')
+
+    if not raw_prompt.strip():
+        return Response("data: {\"content\": \"Error: Empty prompt.\"}\n\ndata: [DONE]\n\n", mimetype='text/event-stream')
+
+    def generate_stream():
+        for chunk in stream_raw_prompt(raw_prompt):
             payload = json.dumps({"content": chunk})
             yield f"data: {payload}\n\n"
         yield "data: [DONE]\n\n"
