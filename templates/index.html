@@ -370,17 +370,19 @@
                                 const parsed = JSON.parse(dataStr);
                                 if (parsed.content) {
                                     accumulatedText += parsed.content;
-                                    outputContent.innerHTML = formatMarkdown(accumulatedText);
+                                    outputContent.innerHTML = formatMarkdown(accumulatedText, true);
                                 }
                             } catch (e) {
                                 // Sometimes raw strings come
                                 accumulatedText += dataStr;
-                                outputContent.innerHTML = formatMarkdown(accumulatedText);
+                                outputContent.innerHTML = formatMarkdown(accumulatedText, true);
                             }
                         }
                     }
                 }
 
+                // Final state: render without streaming cursor
+                outputContent.innerHTML = formatMarkdown(accumulatedText, false);
                 statusIndicator.innerText = "Completed";
                 statusIndicator.style.color = "#008a05";
 
@@ -395,7 +397,7 @@
         }
 
         // Full Markdown parser using marked.js with post-processing
-        function formatMarkdown(text) {
+        function formatMarkdown(text, isStreaming = false) {
             if (!text) return "";
 
             let formattedText = text;
@@ -432,6 +434,11 @@
 
             // Post-process <hr> tags to add airbnb-hr class
             html = html.replace(/<hr\s*\/?>/gim, '<hr class="airbnb-hr">');
+
+            // Append blinking cursor char ▌ while streaming
+            if (isStreaming) {
+                html += '<span class="streaming-cursor">▌</span>';
+            }
 
             return html;
         }

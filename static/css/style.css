@@ -5,9 +5,12 @@
 /* 1. Design Tokens */
 :root {
   /* Brand & Accent Colors */
-  --color-primary: #ff385c;           /* Rausch */
-  --color-primary-active: #e00b41;    /* Rausch Active */
-  --color-primary-disabled: #ffd1da;  /* Rausch Disabled */
+  --color-primary: #ff385c;
+  /* Rausch */
+  --color-primary-active: #e00b41;
+  /* Rausch Active */
+  --color-primary-disabled: #ffd1da;
+  /* Rausch Disabled */
   --color-on-primary: #ffffff;
 
   /* Sub-brand Accents (for badges/accents) */
@@ -62,13 +65,16 @@
 }
 
 /* 2. Global Reset & Base Styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   background-color: var(--color-canvas);
   color: var(--color-ink);
   font-family: var(--font-family-base);
@@ -83,7 +89,10 @@ a {
   text-decoration: none;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: inherit;
 }
@@ -411,6 +420,7 @@ button, input, select, textarea {
   height: 48px;
   min-width: 48px;
   border-radius: var(--rounded-full);
+
   background-color: var(--color-primary);
   color: var(--color-on-primary);
   border: none;
@@ -471,7 +481,8 @@ button, input, select, textarea {
 
 .text-input-airbnb:focus {
   border: 2px solid var(--color-ink);
-  padding: 0 15px; /* adjust for 2px border */
+  padding: 0 15px;
+  /* adjust for 2px border */
 }
 
 .textarea-airbnb {
@@ -594,14 +605,17 @@ button, input, select, textarea {
   word-wrap: break-word;
 }
 
-.output-content h1, .output-content h2, .output-content h3 {
+.output-content h1,
+.output-content h2,
+.output-content h3 {
   color: var(--color-ink);
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
-.output-content ul, .output-content ol {
+.output-content ul,
+.output-content ol {
   margin-left: 1.25rem;
   margin-bottom: 0.75rem;
 }
@@ -666,6 +680,27 @@ button, input, select, textarea {
   margin: 12px 0;
 }
 
+/* Streaming Cursor Indicator (▌) */
+.streaming-cursor {
+  display: inline-block;
+  color: var(--color-primary);
+  font-weight: 700;
+  margin-left: 3px;
+  animation: cursorBlink 0.8s infinite;
+}
+
+@keyframes cursorBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
 /* Skeleton Loading State */
 .skeleton-line {
   height: 16px;
@@ -677,8 +712,13 @@ button, input, select, textarea {
 }
 
 @keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* 9. Modal Dialog (Settings Picker) */
@@ -821,10 +861,12 @@ button, input, select, textarea {
   .top-nav {
     padding: 0 var(--spacing-base);
   }
+
   .product-tabs-container {
     overflow-x: auto;
     gap: var(--spacing-md);
   }
+
   .search-bar-pill {
     flex-direction: column;
     height: auto;
@@ -832,9 +874,11 @@ button, input, select, textarea {
     padding: var(--spacing-md);
     gap: var(--spacing-sm);
   }
+
   .search-field-segment:not(:last-of-type)::after {
     display: none;
   }
+
   .search-orb {
     width: 100%;
     border-radius: var(--rounded-sm);
