@@ -450,10 +450,10 @@ textarea {
 /* 7. Secondary Input Controls (Expandable Options) */
 .extra-inputs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--spacing-base);
   max-width: 900px;
-  margin: 0 auto var(--spacing-xl);
+  margin: 0 auto var(--spacing-lg);
 }
 
 .form-group-airbnb {

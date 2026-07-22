@@ -99,6 +99,11 @@
                 <label class="form-label-airbnb">Key Selling Points / Offer</label>
                 <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
             </div>
+
+            <div class="form-group-airbnb" id="additionalDetailsGroup">
+                <label class="form-label-airbnb">Additional Details</label>
+                <input type="text" id="inputAdditionalDetails" class="text-input-airbnb" placeholder="e.g. Limited edition, call to action, promo code" value="">
+            </div>
         </div>
 
         <!-- Signature Airbnb Search-Bar Pill Console (Placed below Target Audience) -->
@@ -281,15 +286,32 @@
             const statusIndicator = document.getElementById('statusIndicator');
             const generateBtn = document.getElementById('generateBtn');
 
+            const descVal = (document.getElementById('inputDescription') ? document.getElementById('inputDescription').value : '').trim();
+            const kpVal = (document.getElementById('inputKeyPoints') ? document.getElementById('inputKeyPoints').value : '').trim();
+            const extraVal = (document.getElementById('inputAdditionalDetails') ? document.getElementById('inputAdditionalDetails').value : '').trim();
+            
+            let mergedDescParts = [];
+            if (descVal) mergedDescParts.push(descVal);
+            if (kpVal && kpVal !== descVal) mergedDescParts.push(kpVal);
+            if (extraVal) mergedDescParts.push(`Additional Details: ${extraVal}`);
+            const mergedDesc = mergedDescParts.join(' • ');
+
+            const audienceVal = (document.getElementById('inputAudience') ? document.getElementById('inputAudience').value : '').trim();
+            const toneVal = (document.getElementById('selectTone') ? document.getElementById('selectTone').value : '').trim();
+            let mergedAudienceParts = [];
+            if (audienceVal) mergedAudienceParts.push(`Target Audience: ${audienceVal}`);
+            if (toneVal) mergedAudienceParts.push(`Tone: ${toneVal}`);
+            const mergedAudience = mergedAudienceParts.join(', ');
+
             const payload = {
                 tool_type: currentTool,
                 brand_name: document.getElementById('inputBrandName').value,
-                description: document.getElementById('inputDescription').value,
-                target_audience: document.getElementById('inputAudience').value,
-                key_points: document.getElementById('inputKeyPoints').value,
-                tone: document.getElementById('selectTone').value,
-                platform: document.getElementById('selectPlatform').value,
-                campaign_goal: document.getElementById('inputKeyPoints').value
+                description: mergedDesc,
+                target_audience: mergedAudience,
+                key_points: mergedDesc,
+                tone: toneVal,
+                platform: document.getElementById('selectPlatform') ? document.getElementById('selectPlatform').value : 'General',
+                campaign_goal: mergedDesc
             };
 
             // Reset UI state
