@@ -100,29 +100,34 @@
             <!-- Filter Options Grid (Target Platform, Target Audience, Key Selling Points) -->
             <div class="extra-inputs-grid">
                 <div class="form-group-airbnb" id="platformGroup">
-                    <label class="form-label-airbnb">Target Platform</label>
-                    <select id="selectPlatform" class="text-input-airbnb">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label class="form-label-airbnb">Target Platform</label>
+                        <button type="button" id="btnResetPlatform" class="segment-custom-toggle" onclick="resetPlatformSelect()" style="display: none;">Reset list</button>
+                    </div>
+                    <select id="selectPlatform" class="text-input-airbnb" onchange="handlePlatformChange(this.value)">
                         <option value="Google Search & Display">Google Search & Display</option>
                         <option value="Meta Ads (Facebook & Instagram)">Meta Ads (Facebook & Instagram)</option>
                         <option value="LinkedIn Ads">LinkedIn Ads</option>
                         <option value="TikTok & Reels Short Copy">TikTok & Reels</option>
                         <option value="General Digital Ads">General Digital Ads</option>
+                        <option value="__custom__">+ Custom Platform...</option>
                     </select>
+                    <input type="text" id="inputCustomPlatform" class="text-input-airbnb" placeholder="e.g. Pinterest Ads, Billboards, Spotify" style="display: none; margin-top: 6px;" oninput="onFormFieldChange()">
                 </div>
 
                 <div class="form-group-airbnb">
                     <label class="form-label-airbnb">Target Audience</label>
-                    <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers">
+                    <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers" oninput="onFormFieldChange()">
                 </div>
 
                 <div class="form-group-airbnb" id="campaignGoalGroup">
                     <label class="form-label-airbnb">Key Selling Points / Offer</label>
-                    <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste">
+                    <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste" oninput="onFormFieldChange()">
                 </div>
 
                 <div class="form-group-airbnb" id="additionalDetailsGroup">
                     <label class="form-label-airbnb">Additional Details</label>
-                    <input type="text" id="inputAdditionalDetails" class="text-input-airbnb" placeholder="e.g. Limited edition, call to action, promo code" value="">
+                    <input type="text" id="inputAdditionalDetails" class="text-input-airbnb" placeholder="e.g. Limited edition, call to action, promo code" value="" oninput="onFormFieldChange()">
                 </div>
             </div>
 
@@ -132,26 +137,31 @@
                     <!-- Segment 1: Brand / Product Name -->
                     <div class="search-field-segment">
                         <span class="segment-label">PRODUCT / BRAND</span>
-                        <input type="text" id="inputBrandName" class="segment-input" placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar">
+                        <input type="text" id="inputBrandName" class="segment-input" placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar" oninput="onFormFieldChange()">
                     </div>
 
                     <!-- Segment 2: Description / Core Details -->
                     <div class="search-field-segment">
                         <span class="segment-label">CORE DETAILS</span>
-                        <input type="text" id="inputDescription" class="segment-input" placeholder="e.g. Zero calories, iconic taste, ice-cold refresh" value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment">
+                        <input type="text" id="inputDescription" class="segment-input" placeholder="e.g. Zero calories, iconic taste, ice-cold refresh" value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment" oninput="onFormFieldChange()">
                     </div>
 
                     <!-- Segment 3: Audience & Voice Tone -->
-                    <div class="search-field-segment">
-                        <span class="segment-label">TONE & AUDIENCE</span>
-                        <select id="selectTone" class="segment-select">
+                    <div class="search-field-segment" id="toneSegment">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <span class="segment-label">TONE & AUDIENCE</span>
+                            <button type="button" id="btnResetTone" class="segment-custom-toggle" onclick="resetToneSelect()" style="display: none;">Reset list</button>
+                        </div>
+                        <select id="selectTone" class="segment-select" onchange="handleToneChange(this.value)">
                             <option value="Energetic & Bold">Energetic & Bold</option>
                             <option value="Professional & Persuasive">Professional & Persuasive</option>
                             <option value="Casual & Friendly">Casual & Friendly</option>
                             <option value="Witty & Humorous">Witty & Humorous</option>
                             <option value="Luxury & Elegant">Luxury & Elegant</option>
                             <option value="Urgent & Promotional">Urgent & Promotional</option>
+                            <option value="__custom__">+ Custom Tone...</option>
                         </select>
+                        <input type="text" id="inputCustomTone" class="segment-input" placeholder="e.g. Sarcastic, Empathetic, Gen-Z" style="display: none;" oninput="onFormFieldChange()">
                     </div>
 
                     <!-- Search Orb Button -->
@@ -365,6 +375,66 @@
             document.getElementById('rawPromptTextarea').focus();
         }
 
+        function handlePlatformChange(val) {
+            const customInput = document.getElementById('inputCustomPlatform');
+            const resetBtn = document.getElementById('btnResetPlatform');
+            if (val === '__custom__') {
+                customInput.style.display = 'block';
+                if (resetBtn) resetBtn.style.display = 'inline-block';
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+                if (resetBtn) resetBtn.style.display = 'none';
+            }
+            onFormFieldChange();
+        }
+
+        function resetPlatformSelect() {
+            const sel = document.getElementById('selectPlatform');
+            const customInput = document.getElementById('inputCustomPlatform');
+            const resetBtn = document.getElementById('btnResetPlatform');
+            sel.value = "Google Search & Display";
+            customInput.style.display = 'none';
+            customInput.value = "";
+            if (resetBtn) resetBtn.style.display = 'none';
+            onFormFieldChange();
+        }
+
+        function handleToneChange(val) {
+            const selectTone = document.getElementById('selectTone');
+            const customInput = document.getElementById('inputCustomTone');
+            const resetBtn = document.getElementById('btnResetTone');
+            if (val === '__custom__') {
+                selectTone.style.display = 'none';
+                customInput.style.display = 'block';
+                if (resetBtn) resetBtn.style.display = 'inline-block';
+                customInput.focus();
+            } else {
+                selectTone.style.display = 'block';
+                customInput.style.display = 'none';
+                if (resetBtn) resetBtn.style.display = 'none';
+            }
+            onFormFieldChange();
+        }
+
+        function resetToneSelect() {
+            const selectTone = document.getElementById('selectTone');
+            const customInput = document.getElementById('inputCustomTone');
+            const resetBtn = document.getElementById('btnResetTone');
+            selectTone.style.display = 'block';
+            selectTone.value = "Casual & Friendly";
+            customInput.style.display = 'none';
+            customInput.value = "";
+            if (resetBtn) resetBtn.style.display = 'none';
+            onFormFieldChange();
+        }
+
+        function onFormFieldChange() {
+            if (typeof currentInputMode !== 'undefined' && currentInputMode === 'prompt') {
+                loadFormPromptPreview();
+            }
+        }
+
         function buildPayloadFromForm() {
             const descVal = (document.getElementById('inputDescription') ? document.getElementById('inputDescription').value : '').trim();
             const kpVal = (document.getElementById('inputKeyPoints') ? document.getElementById('inputKeyPoints').value : '').trim();
@@ -377,7 +447,21 @@
             const mergedDesc = mergedDescParts.join(' • ');
 
             const audienceVal = (document.getElementById('inputAudience') ? document.getElementById('inputAudience').value : '').trim();
-            const toneVal = (document.getElementById('selectTone') ? document.getElementById('selectTone').value : '').trim();
+            
+            // Resolve Tone (check if custom is selected)
+            let toneVal = document.getElementById('selectTone') ? document.getElementById('selectTone').value : '';
+            if (toneVal === '__custom__') {
+                const customT = (document.getElementById('inputCustomTone') ? document.getElementById('inputCustomTone').value : '').trim();
+                toneVal = customT || 'Custom Tone';
+            }
+
+            // Resolve Platform (check if custom is selected)
+            let platformVal = document.getElementById('selectPlatform') ? document.getElementById('selectPlatform').value : 'General';
+            if (platformVal === '__custom__') {
+                const customP = (document.getElementById('inputCustomPlatform') ? document.getElementById('inputCustomPlatform').value : '').trim();
+                platformVal = customP || 'Custom Platform';
+            }
+
             let mergedAudienceParts = [];
             if (audienceVal) mergedAudienceParts.push(`Target Audience: ${audienceVal}`);
             if (toneVal) mergedAudienceParts.push(`Tone: ${toneVal}`);
@@ -390,7 +474,7 @@
                 target_audience: mergedAudience,
                 key_points: mergedDesc,
                 tone: toneVal,
-                platform: document.getElementById('selectPlatform') ? document.getElementById('selectPlatform').value : 'General',
+                platform: platformVal,
                 campaign_goal: mergedDesc
             };
         }
