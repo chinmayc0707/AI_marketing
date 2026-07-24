@@ -203,10 +203,10 @@ textarea {
   cursor: pointer;
 }
 
-.brand-logo svg {
+.brand-logo img {
   width: 32px;
   height: 32px;
-  fill: var(--color-primary);
+  object-fit: contain;
 }
 
 .product-tabs-container {
