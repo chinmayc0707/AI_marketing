@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbnb Marketing Studio — AI Copy Generator</title>
+    <title>MarketingBuddy</title>
     <!-- Inter Font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,56 +13,77 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
 
     <!-- 1. Airbnb Top Navigation -->
     <header class="top-nav">
         <div class="brand-logo" onclick="window.location.reload()">
             <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.011.315c0 4.308-3.322 7.806-7.5 7.806-3.131 0-5.741-1.921-6.852-4.664L16 27.042l-.148.332C14.741 30.116 12.131 32 9 32 4.822 32 1.5 28.502 1.5 24.194c0-.996.22-1.918.895-3.522l.17-.393c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C11.488 2.052 12.943 1 15 1h1zm0 2c-1.22 0-2.25.688-3.313 2.585l-.396.762C10.428 10.024 6.36 18.522 5.4 20.771l-.105.247c-.571 1.36-.795 2.072-.835 2.766L4.45 24.194c0 2.99 2.19 5.806 5.55 5.806 2.378 0 4.417-1.503 5.28-3.794l.17-.45.32-.843c.12-.317.51-.317.63 0l.32.843.17.45c.863 2.291 2.902 3.794 5.28 3.794 3.36 0 5.55-2.816 5.55-5.806 0-.756-.232-1.528-.888-3.088l-.104-.247c-.96-2.249-5.028-10.747-6.891-14.424l-.396-.762C17.25 3.688 16.22 3 15 3h1z"/>
+                <path
+                    d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.011.315c0 4.308-3.322 7.806-7.5 7.806-3.131 0-5.741-1.921-6.852-4.664L16 27.042l-.148.332C14.741 30.116 12.131 32 9 32 4.822 32 1.5 28.502 1.5 24.194c0-.996.22-1.918.895-3.522l.17-.393c.986-2.296 5.146-11.006 7.1-14.836l.533-1.025C11.488 2.052 12.943 1 15 1h1zm0 2c-1.22 0-2.25.688-3.313 2.585l-.396.762C10.428 10.024 6.36 18.522 5.4 20.771l-.105.247c-.571 1.36-.795 2.072-.835 2.766L4.45 24.194c0 2.99 2.19 5.806 5.55 5.806 2.378 0 4.417-1.503 5.28-3.794l.17-.45.32-.843c.12-.317.51-.317.63 0l.32.843.17.45c.863 2.291 2.902 3.794 5.28 3.794 3.36 0 5.55-2.816 5.55-5.806 0-.756-.232-1.528-.888-3.088l-.104-.247c-.96-2.249-5.028-10.747-6.891-14.424l-.396-.762C17.25 3.688 16.22 3 15 3h1z" />
             </svg>
-            <span>Marketing</span>
+            <span>MarketingBuddy</span>
         </div>
 
         <nav class="product-tabs-container">
             <div class="product-tab active" data-tool="ad_copy" onclick="switchTool('ad_copy', this)">
                 <div class="tab-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                    </svg>
                 </div>
                 <span>Ad Copy</span>
             </div>
 
             <div class="product-tab" data-tool="social_caption" onclick="switchTool('social_caption', this)">
                 <div class="tab-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                    </svg>
                 </div>
                 <span>Social Captions</span>
             </div>
 
             <div class="product-tab" data-tool="email_campaign" onclick="switchTool('email_campaign', this)">
                 <div class="tab-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
                 </div>
                 <span>Email Campaigns</span>
             </div>
 
             <div class="product-tab" data-tool="product_description" onclick="switchTool('product_description', this)">
                 <div class="tab-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                    </svg>
                 </div>
                 <span>Product Copy</span>
             </div>
 
             <div class="product-tab" data-tool="slogan" onclick="switchTool('slogan', this)">
                 <div class="tab-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                    </svg>
                 </div>
                 <span>Slogans</span>
             </div>
 
             <div class="product-tab" data-tool="marketing_ideas" onclick="switchTool('marketing_ideas', this)">
                 <div class="tab-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+                    </svg>
                 </div>
                 <span class="new-badge tag-uppercase">NEW</span>
                 <span>Growth Ideas</span>
@@ -74,23 +96,35 @@
     <main class="main-wrapper">
         <section class="hero-section">
             <h1 class="text-display-xl hero-title" id="toolHeading">Generate High-Converting Ad Copy</h1>
-            <p class="hero-subtitle" id="toolSubtitle">Craft persuasive headline variations and primary body text tuned for your target audience.</p>
+            <p class="hero-subtitle" id="toolSubtitle">Craft persuasive headline variations and primary body text tuned
+                for your target audience.</p>
         </section>
 
         <!-- Input Mode Toggle & View Prompt -->
         <div class="input-mode-bar">
             <div class="mode-toggle">
                 <button class="mode-btn active" id="modeFormBtn" onclick="switchInputMode('form')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>
                     <span>Form</span>
                 </button>
                 <button class="mode-btn" id="modePromptBtn" onclick="switchInputMode('prompt')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="4 17 10 11 4 5" />
+                        <line x1="12" y1="19" x2="20" y2="19" />
+                    </svg>
                     <span>Prompt</span>
                 </button>
             </div>
             <button class="view-prompt-btn" id="viewPromptBtn" onclick="showRawPrompt()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
                 <span>View Raw Prompt</span>
             </button>
         </div>
@@ -102,7 +136,8 @@
                 <div class="form-group-airbnb" id="platformGroup">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <label class="form-label-airbnb">Target Platform</label>
-                        <button type="button" id="btnResetPlatform" class="segment-custom-toggle" onclick="resetPlatformSelect()" style="display: none;">Reset list</button>
+                        <button type="button" id="btnResetPlatform" class="segment-custom-toggle"
+                            onclick="resetPlatformSelect()" style="display: none;">Reset list</button>
                     </div>
                     <select id="selectPlatform" class="text-input-airbnb" onchange="handlePlatformChange(this.value)">
                         <option value="Google Search & Display">Google Search & Display</option>
@@ -112,22 +147,30 @@
                         <option value="General Digital Ads">General Digital Ads</option>
                         <option value="__custom__">+ Custom Platform...</option>
                     </select>
-                    <input type="text" id="inputCustomPlatform" class="text-input-airbnb" placeholder="e.g. Pinterest Ads, Billboards, Spotify" style="display: none; margin-top: 6px;" oninput="onFormFieldChange()">
+                    <input type="text" id="inputCustomPlatform" class="text-input-airbnb"
+                        placeholder="e.g. Pinterest Ads, Billboards, Spotify" style="display: none; margin-top: 6px;"
+                        oninput="onFormFieldChange()">
                 </div>
 
                 <div class="form-group-airbnb">
                     <label class="form-label-airbnb">Target Audience</label>
-                    <input type="text" id="inputAudience" class="text-input-airbnb" placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals" value="Young Adults & Refreshment Seekers" oninput="onFormFieldChange()">
+                    <input type="text" id="inputAudience" class="text-input-airbnb"
+                        placeholder="e.g. Gen Z, Fitness Enthusiasts, Busy Professionals"
+                        value="Young Adults & Refreshment Seekers" oninput="onFormFieldChange()">
                 </div>
 
                 <div class="form-group-airbnb" id="campaignGoalGroup">
                     <label class="form-label-airbnb">Key Selling Points / Offer</label>
-                    <input type="text" id="inputKeyPoints" class="text-input-airbnb" placeholder="e.g. Free shipping, 20% off first order" value="Zero sugar, zero compromise on original taste" oninput="onFormFieldChange()">
+                    <input type="text" id="inputKeyPoints" class="text-input-airbnb"
+                        placeholder="e.g. Free shipping, 20% off first order"
+                        value="Zero sugar, zero compromise on original taste" oninput="onFormFieldChange()">
                 </div>
 
                 <div class="form-group-airbnb" id="additionalDetailsGroup">
                     <label class="form-label-airbnb">Additional Details</label>
-                    <input type="text" id="inputAdditionalDetails" class="text-input-airbnb" placeholder="e.g. Limited edition, call to action, promo code" value="" oninput="onFormFieldChange()">
+                    <input type="text" id="inputAdditionalDetails" class="text-input-airbnb"
+                        placeholder="e.g. Limited edition, call to action, promo code" value=""
+                        oninput="onFormFieldChange()">
                 </div>
             </div>
 
@@ -137,20 +180,26 @@
                     <!-- Segment 1: Brand / Product Name -->
                     <div class="search-field-segment">
                         <span class="segment-label">PRODUCT / BRAND</span>
-                        <input type="text" id="inputBrandName" class="segment-input" placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar" oninput="onFormFieldChange()">
+                        <input type="text" id="inputBrandName" class="segment-input"
+                            placeholder="e.g. Coca-Cola Zero Sugar" value="Coca-Cola Zero Sugar"
+                            oninput="onFormFieldChange()">
                     </div>
 
                     <!-- Segment 2: Description / Core Details -->
                     <div class="search-field-segment">
                         <span class="segment-label">CORE DETAILS</span>
-                        <input type="text" id="inputDescription" class="segment-input" placeholder="e.g. Zero calories, iconic taste, ice-cold refresh" value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment" oninput="onFormFieldChange()">
+                        <input type="text" id="inputDescription" class="segment-input"
+                            placeholder="e.g. Zero calories, iconic taste, ice-cold refresh"
+                            value="Zero sugar, iconic Coca-Cola taste, ultimate refreshment"
+                            oninput="onFormFieldChange()">
                     </div>
 
                     <!-- Segment 3: Audience & Voice Tone -->
                     <div class="search-field-segment" id="toneSegment">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                             <span class="segment-label">TONE & AUDIENCE</span>
-                            <button type="button" id="btnResetTone" class="segment-custom-toggle" onclick="resetToneSelect()" style="display: none;">Reset list</button>
+                            <button type="button" id="btnResetTone" class="segment-custom-toggle"
+                                onclick="resetToneSelect()" style="display: none;">Reset list</button>
                         </div>
                         <select id="selectTone" class="segment-select" onchange="handleToneChange(this.value)">
                             <option value="Energetic & Bold">Energetic & Bold</option>
@@ -161,13 +210,16 @@
                             <option value="Urgent & Promotional">Urgent & Promotional</option>
                             <option value="__custom__">+ Custom Tone...</option>
                         </select>
-                        <input type="text" id="inputCustomTone" class="segment-input" placeholder="e.g. Sarcastic, Empathetic, Gen-Z" style="display: none;" oninput="onFormFieldChange()">
+                        <input type="text" id="inputCustomTone" class="segment-input"
+                            placeholder="e.g. Sarcastic, Empathetic, Gen-Z" style="display: none;"
+                            oninput="onFormFieldChange()">
                     </div>
 
                     <!-- Search Orb Button -->
                     <button class="search-orb" onclick="startGeneration()" id="generateBtn" title="Generate Copy">
                         <svg viewBox="0 0 24 24" width="20" height="20">
-                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            <path
+                                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                         </svg>
                     </button>
                 </div>
@@ -183,11 +235,18 @@
                     <span class="prompt-editor-hint">Auto-generated from your form inputs</span>
                     <div class="form-prompt-actions">
                         <button class="form-prompt-copy-btn" onclick="copyFormPrompt()" title="Copy to clipboard">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
                             <span id="formPromptCopyText">Copy</span>
                         </button>
                         <button class="form-prompt-copy-btn" onclick="useFormPrompt()" title="Use as custom prompt">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
                             <span>Use as Base</span>
                         </button>
                     </div>
@@ -199,13 +258,16 @@
             <div class="prompt-editor-container">
                 <div class="prompt-editor-header">
                     <span class="prompt-editor-label">Custom Prompt</span>
-                    <span class="prompt-editor-hint">Write your own prompt — this overrides the form-generated one</span>
+                    <span class="prompt-editor-hint">Write your own prompt — this overrides the form-generated
+                        one</span>
                 </div>
-                <textarea id="rawPromptTextarea" class="prompt-editor-textarea" rows="8" placeholder="Write your custom marketing prompt here...&#10;&#10;e.g. Act as an expert copywriter. Generate 3 high-converting ad headlines for Coca-Cola Zero Sugar targeting Gen Z on Instagram. Use a casual, bold tone."></textarea>
+                <textarea id="rawPromptTextarea" class="prompt-editor-textarea" rows="8"
+                    placeholder="Write your custom marketing prompt here...&#10;&#10;e.g. Act as an expert copywriter. Generate 3 high-converting ad headlines for Coca-Cola Zero Sugar targeting Gen Z on Instagram. Use a casual, bold tone."></textarea>
                 <div class="prompt-editor-actions">
                     <button class="search-orb" onclick="startGeneration()" id="generateBtnPrompt" title="Generate Copy">
                         <svg viewBox="0 0 24 24" width="20" height="20">
-                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            <path
+                                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                         </svg>
                     </button>
                 </div>
@@ -217,7 +279,8 @@
             <div class="prompt-modal">
                 <div class="prompt-modal-header">
                     <h3>Raw Prompt Preview</h3>
-                    <button class="prompt-modal-close" onclick="document.getElementById('promptModal').classList.remove('active')">&times;</button>
+                    <button class="prompt-modal-close"
+                        onclick="document.getElementById('promptModal').classList.remove('active')">&times;</button>
                 </div>
                 <div class="prompt-modal-body">
                     <div class="prompt-section">
@@ -231,7 +294,11 @@
                 </div>
                 <div class="prompt-modal-footer">
                     <button class="btn-secondary-airbnb" onclick="copyPromptToClipboard()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
                         <span id="copyPromptBtnText">Copy Full Prompt</span>
                     </button>
                 </div>
@@ -255,19 +322,29 @@
 
                     <div class="card-actions">
                         <button class="btn-secondary-airbnb" onclick="copyContentToClipboard()">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
                             <span id="copyBtnText">Copy Copy</span>
                         </button>
 
-                        <button class="heart-button" id="saveHeart" onclick="toggleSaveState()" title="Save to favorites">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <button class="heart-button" id="saveHeart" onclick="toggleSaveState()"
+                            title="Save to favorites">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
                         </button>
                     </div>
                 </div>
 
                 <!-- Live Streamed Markdown Content Container -->
                 <div class="output-content" id="outputContent">
-                    <p style="color: var(--color-muted); font-style: italic;">Enter details in the search console above and click the red Rausch orb to generate copy in real-time...</p>
+                    <p style="color: var(--color-muted); font-style: italic;">Enter details in the search console above
+                        and click the red Rausch orb to generate copy in real-time...</p>
                 </div>
             </div>
         </section>
@@ -439,7 +516,7 @@
             const descVal = (document.getElementById('inputDescription') ? document.getElementById('inputDescription').value : '').trim();
             const kpVal = (document.getElementById('inputKeyPoints') ? document.getElementById('inputKeyPoints').value : '').trim();
             const extraVal = (document.getElementById('inputAdditionalDetails') ? document.getElementById('inputAdditionalDetails').value : '').trim();
-            
+
             let mergedDescParts = [];
             if (descVal) mergedDescParts.push(descVal);
             if (kpVal && kpVal !== descVal) mergedDescParts.push(kpVal);
@@ -447,7 +524,7 @@
             const mergedDesc = mergedDescParts.join(' • ');
 
             const audienceVal = (document.getElementById('inputAudience') ? document.getElementById('inputAudience').value : '').trim();
-            
+
             // Resolve Tone (check if custom is selected)
             let toneVal = document.getElementById('selectTone') ? document.getElementById('selectTone').value : '';
             if (toneVal === '__custom__') {
@@ -675,7 +752,7 @@
             if (!text) return "";
 
             let formattedText = text;
-            
+
             // If streaming, append cursor character '▌' before Markdown parsing so it stays strictly inline
             if (isStreaming) {
                 const fenceMatches = (formattedText.match(/```/g) || []).length;
@@ -703,7 +780,7 @@
             html = html.replace(/▌/g, '<span class="streaming-cursor">▌</span>');
 
             // Post-process code blocks to inject Airbnb copyable snippet cards
-            html = html.replace(/<pre><code(?:\s+class="[^"]*")?>([\s\S]*?)<\/code><\/pre>/gim, function(match, codeContent) {
+            html = html.replace(/<pre><code(?:\s+class="[^"]*")?>([\s\S]*?)<\/code><\/pre>/gim, function (match, codeContent) {
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = codeContent;
                 const rawCode = tempDiv.textContent || tempDiv.innerText || "";
@@ -775,4 +852,5 @@
 
     </script>
 </body>
+
 </html>
