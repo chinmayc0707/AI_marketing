@@ -206,7 +206,6 @@ textarea {
 .brand-logo svg {
   width: 32px;
   height: 32px;
-  fill: var(--color-primary);
 }
 
 .product-tabs-container {
