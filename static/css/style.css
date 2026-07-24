@@ -203,10 +203,9 @@ textarea {
   cursor: pointer;
 }
 
-.brand-logo img {
+.brand-logo svg {
   width: 32px;
   height: 32px;
-  object-fit: contain;
 }
 
 .product-tabs-container {
