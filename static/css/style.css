@@ -1209,3 +1209,12 @@ textarea {
 .segment-custom-toggle:hover {
   color: var(--color-primary-active);
 }
+/* Global Selection */
+::selection {
+  background: #FF385C;
+  color: #ffffff;
+}
+::-moz-selection {
+  background: #FF385C;
+  color: #ffffff;
+}
